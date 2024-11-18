@@ -20,3 +20,5 @@ model Tarefa {
   dataLimite         DateTime
   ordemApresentacao  Int      @unique
 }
+
+
