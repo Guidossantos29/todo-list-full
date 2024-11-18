@@ -4,6 +4,8 @@ import cors from 'cors';
 import { PrismaClient } from "@prisma/client";
 
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 const prisma = new PrismaClient();
 
@@ -42,4 +44,9 @@ app.post("tarefas", async (req: Request, res: Response) => {
        
     }
 })
+
+
+
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
