@@ -18,6 +18,16 @@ class TarefasService {
         }
     }
 
+    async getAllTarefas(){
+        try {
+            const tarefas = await prismaClient.tarefa.findMany();
+            return tarefas
+        } catch(error){
+            throw new Error("Erro ao buscar tarefas");
+
+        }
+    } 
+
 }
 
 export { TarefasService }

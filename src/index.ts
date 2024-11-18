@@ -23,6 +23,18 @@ app.post("/tarefas", async (req:Request,res: Response) => {
     }
 });
 
+app.get("/tarefas", async (req:Request,res: Response) => {
+    const tarefaController = new TarefasController()
+    try {
+        await tarefaController.get
+        
+    } catch (error){
+        if (error instanceof Error) {
+            res.json({ error: error.message })
+        }
+    }
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
