@@ -22,12 +22,16 @@ class TarefasController {
         const tarefasService = new TarefasService()
         try {
             const tarefa = await tarefasService.getAllTarefas
-            res.json(tarefa)
+            res.status(201).json(tarefa)
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error("Erro ao criar tarefa");
             }
         }
+    }
+
+    async getTarefasById(req: Request, res: Response){
+
     }
 
 
