@@ -1,0 +1,11 @@
+{
+    "services": [
+      {
+        "build": {
+          "cmd": "npm install",
+          "start": "npm start"
+        }
+      }
+    ]
+  }
+  
