@@ -23,7 +23,7 @@ class TarefasController {
         const tarefasService = new TarefasService()
         try {
             const tarefa = await tarefasService.getAllTarefas
-            res.status(201).json(tarefa)
+            res.json(tarefa)
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error("Erro ao buscar tarefas");
@@ -57,6 +57,20 @@ class TarefasController {
 
             return res.json(Tarefa)
 
+        } catch(error){
+            if (error instanceof Error) {
+                throw new Error("Erro ao editar tarefa");
+            }
+        }
+    }
+
+    async delete(req: Request, res: Response){
+        const { id } = req.params
+        const tarefasService = new TarefasService()
+
+        try{
+            const tarefa = tarefasService.delete(parseInt(id))
+            res.status(204).json(tarefa)
         } catch(error){
             if (error instanceof Error) {
                 throw new Error("Erro ao editar tarefa");

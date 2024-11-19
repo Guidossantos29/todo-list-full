@@ -1,3 +1,4 @@
+import { Tarefa } from './../../node_modules/.prisma/client/index.d';
 import prismaClient from "../prisma";
 
 
@@ -30,18 +31,18 @@ class TarefasService {
 
     async getTarefasById(id: number) {
         try {
-            const tarefas = await prismaClient.tarefa.findUnique({
+            const tarefa = await prismaClient.tarefa.findUnique({
                 where: {
                     id
                 }
 
             });
 
-            if (!tarefas) {
+            if (!tarefa) {
                 throw new Error("Tarefa não encontrada");
             }
 
-            return tarefas
+            return tarefa
 
         } catch (error) {
             throw new Error("Erro ao buscar tarefa");
@@ -72,6 +73,22 @@ class TarefasService {
         } catch (error) {
             throw new Error("Erro ao buscar tarefa");
         }
+    }
+
+    async delete(id:number){
+        try {
+            const tarefa = await prismaClient.tarefa.delete({
+                where:{
+                    id
+                }
+                
+            })
+
+            return tarefa 
+        } catch(error){
+            throw new Error("Erro ao deletar tarefa");
+        }
+
     }
 
 }

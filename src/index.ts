@@ -57,6 +57,18 @@ app.put("/tarefas/:id", async (req: Request, res: Response) => {
     }
 })
 
+app.delete("/tarefas/:id", async (req: Request, res: Response) => {
+    try {   
+        const tarefaController = new TarefasController()
+        await tarefaController.delete
+    } catch(error) {
+        if (error instanceof Error) {
+            res.json({ error: error.message })
+        }
+
+    }
+})
+
 
 
 app.listen(PORT, () => {
