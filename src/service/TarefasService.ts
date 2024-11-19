@@ -44,9 +44,34 @@ class TarefasService {
             return tarefas
 
         } catch (error) {
-            throw new Error("Erro ao buscar tarefas");
+            throw new Error("Erro ao buscar tarefa");
         }
 
+    }
+
+    async update(id: number, nome: string, custo: number, dataLimite: Date, ordemApresentacao: number) {
+        try {
+
+            const tarefa = await prismaClient.tarefa.update({
+                where: {
+                    id
+                },
+                data: {
+                    id,
+                    nome,
+                    custo,
+                    dataLimite,
+                    ordemApresentacao,
+                }
+
+                
+            })
+
+            return tarefa
+
+        } catch (error) {
+            throw new Error("Erro ao buscar tarefa");
+        }
     }
 
 }
