@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Bem-vindo à API de Tarefas!");
+    res.send("Bem-vindo à API de Tarefas!");
 });
 
 

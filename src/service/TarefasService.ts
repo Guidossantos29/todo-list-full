@@ -3,8 +3,20 @@ import prismaClient from "../prisma";
 
 
 class TarefasService {
-    async createTarefa(nome: string, custo: number, dataLimite: Date, ordemApresentacao: number) {
+    async createTarefa(nome: string, custo: number, dataLimite: Date) {
         try {
+
+            const maxOrder = await prismaClient.tarefa.findFirst({
+                orderBy:{
+                    ordemApresentacao:"desc"
+                },
+                select:{
+                    ordemApresentacao:true
+                }
+            })
+
+            const ordemApresentacao = maxOrder?.ordemApresentacao !== undefined ? maxOrder.ordemApresentacao + 1 : 0;
+
             const tarefa = await prismaClient.tarefa.create({
                 data: {
                     nome,
