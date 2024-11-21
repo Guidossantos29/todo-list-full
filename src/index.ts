@@ -7,6 +7,11 @@ import { setupSwagger } from './swagger/swagger';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const corsOptions = {
+  origin: 'https://todo-list-full-production.up.railway.app/',  
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  
+};
+
 app.use(cors());
 app.use(express.json());
 
