@@ -10,7 +10,7 @@ class TarefasController {
         const tarefasService = new TarefasService()
         try {
             const { nome, custo, dataLimite, ordemApresentacao } = req.body;
-            const tarefa = await tarefasService.createTarefa(nome, custo, dataLimite, ordemApresentacao);
+            const tarefa = await tarefasService.createTarefa(nome, custo, dataLimite);
             return res.status(201).json(tarefa);
         } catch (error) {
             if (error instanceof Error) {
