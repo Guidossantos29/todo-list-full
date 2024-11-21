@@ -15,7 +15,7 @@ const options = {
         url: "http://localhost:3000",
       },
       {
-        url: "https://todo-list-full-production.up.railway.app/"
+        url: "https://todo-list-full-production.up.railway.app"
       }
     ],
   },
