@@ -12,14 +12,14 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:3000",  
       },
       {
-        url: "https://todo-list-full-production.up.railway.app"
-      }
+        url: "https://todo-list-full-production.up.railway.app",  
+      },
     ],
   },
-  apis: ["./src/index.ts"], 
+  apis: ["./src/index.ts"],  
 };
 
 const swaggerSpec = swaggerJsdoc(options);
