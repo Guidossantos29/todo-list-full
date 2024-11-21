@@ -1,4 +1,4 @@
-import { Tarefa } from './../../node_modules/.prisma/client/index.d';
+
 import prismaClient from "../prisma";
 
 
@@ -9,7 +9,7 @@ class TarefasService {
                 data: {
                     nome,
                     custo,
-                    dataLimite,
+                    dataLimite: new Date(dataLimite),
                     ordemApresentacao
                 }
             });
@@ -58,7 +58,7 @@ class TarefasService {
                     id
                 },
                 data: {
-                    id,
+                    
                     nome,
                     custo,
                     dataLimite,

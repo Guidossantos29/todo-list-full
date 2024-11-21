@@ -1,4 +1,4 @@
-import { Tarefa } from './../../node_modules/.prisma/client/index.d';
+
 
 import { Request, Response } from 'express';
 import { TarefasService } from '../service/TarefasService';
@@ -22,8 +22,8 @@ class TarefasController {
     async get(req: Request, res: Response) {
         const tarefasService = new TarefasService()
         try {
-            const tarefa = await tarefasService.getAllTarefas
-            res.json(tarefa)
+            const tarefa = await tarefasService.getAllTarefas()
+            res.status(200).json(tarefa)
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error("Erro ao buscar tarefas");
@@ -53,9 +53,15 @@ class TarefasController {
         const tarefasService = new TarefasService()
 
         try{
-            const Tarefa = await tarefasService.update(parseInt(id),nome,custo,dataLimite,ordemApresentacao)
+            const tarefa = await tarefasService.update(
+                parseInt(id),
+                nome,
+                custo,
+                new Date(dataLimite),
+                ordemApresentacao
+            )
 
-            return res.json(Tarefa)
+            return res.status(200).json(tarefa)
 
         } catch(error){
             if (error instanceof Error) {
@@ -69,11 +75,11 @@ class TarefasController {
         const tarefasService = new TarefasService()
 
         try{
-            const tarefa = tarefasService.delete(parseInt(id))
-            res.status(204).json(tarefa)
+            const tarefa = await tarefasService.delete(parseInt(id))
+            res.status(200).json(tarefa)
         } catch(error){
             if (error instanceof Error) {
-                throw new Error("Erro ao editar tarefa");
+                throw new Error("Erro ao deletar tarefa");
             }
         }
     }
