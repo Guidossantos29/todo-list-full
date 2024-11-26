@@ -237,7 +237,8 @@ app.delete("/tarefas/:id", async (req: Request, res: Response) => {
  *         description: Erro no servidor
  */
 app.put("/tarefas/reorder/:id", async (req: Request, res: Response): Promise<any> => {
-  const { id, novaOrdem } = req.body;
+  const { id } = req.params
+  const { novaOrdem } = req.body;
 
   const tarefasService = new TarefasService();
 
