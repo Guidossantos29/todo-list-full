@@ -3,6 +3,7 @@ import cors from 'cors';
 import { Request, Response } from 'express';
 import { TarefasController } from './controllers/tarefaController';
 import { setupSwagger } from './swagger/swagger';
+import { TarefasService } from './service/TarefasService';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +14,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.send("Bem-vindo à API de Tarefas!");
 });
-
 
 setupSwagger(app);
 
@@ -184,6 +184,73 @@ app.delete("/tarefas/:id", async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof Error) {
       res.json({ error: error.message });
+    }
+  }
+});
+
+/**
+ * @swagger
+ * /tarefas/reorder:
+ *   put:
+ *     summary: Atualiza a ordem de uma tarefa existente
+ *     tags: [Tarefas]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: ID da tarefa a ser reordenada
+ *               novaOrdem:
+ *                 type: integer
+ *                 description: Nova posição da tarefa na lista
+ *     responses:
+ *       200:
+ *         description: Ordem da tarefa atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID da tarefa
+ *                 nome:
+ *                   type: string
+ *                   description: Nome da tarefa
+ *                 custo:
+ *                   type: number
+ *                   description: Custo da tarefa
+ *                 dataLimite:
+ *                   type: string
+ *                   format: date
+ *                   description: Data limite da tarefa
+ *                 ordemApresentacao:
+ *                   type: integer
+ *                   description: Ordem de apresentação da tarefa após a atualização
+ *       400:
+ *         description: ID e nova ordem são obrigatórios e devem ser números
+ *       500:
+ *         description: Erro no servidor
+ */
+app.put("/tarefas/reorder", async (req: Request, res: Response): Promise<any> => {
+  const { id, novaOrdem } = req.body;
+
+  const tarefasService = new TarefasService();
+
+  try {
+    if (!id || novaOrdem === undefined) {
+      return res.status(400).json({ error: "ID e nova ordem são obrigatórios." });
+    }
+
+    const tarefa = await tarefasService.updateOrder(Number(id), Number(novaOrdem));
+    return res.status(200).json(tarefa);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({ error: error.message });
     }
   }
 });

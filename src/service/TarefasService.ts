@@ -103,6 +103,50 @@ class TarefasService {
 
     }
 
+    async updateOrder(id: number, novaOrdem: number) {
+      try {
+          const tarefa = await prismaClient.tarefa.findUnique({
+              where: { id }
+          });
+
+          if (!tarefa) {
+              throw new Error("Tarefa não encontrada.");
+          }
+
+          const tarefas = await prismaClient.tarefa.findMany({
+              orderBy: {
+                  ordemApresentacao: "asc"
+              }
+          });
+
+          
+          const outrasTarefas = tarefas.filter(t => t.id !== id);
+
+          
+          outrasTarefas.splice(novaOrdem, 0, tarefa);
+
+          
+          for (let i = 0; i < outrasTarefas.length; i++) {
+              await prismaClient.tarefa.update({
+                  where: { id: outrasTarefas[i].id },
+                  data: { ordemApresentacao: i }
+              });
+          }
+
+          return await prismaClient.tarefa.findUnique({
+              where: { id }
+          });
+      } catch (error) {
+        if(error instanceof Error){
+          throw new Error("Erro ao atualizar a ordem da tarefa: " + error.message);
+          
+        }
+         
+      }
+  }
+
+
+
 }
 
 export { TarefasService }
