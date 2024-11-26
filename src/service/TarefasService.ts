@@ -119,11 +119,18 @@ class TarefasService {
               }
           });
 
-          
           const outrasTarefas = tarefas.filter(t => t.id !== id);
 
           
           outrasTarefas.splice(novaOrdem, 0, tarefa);
+
+          
+          for (let i = 0; i < outrasTarefas.length; i++) {
+              await prismaClient.tarefa.update({
+                  where: { id: outrasTarefas[i].id },
+                  data: { ordemApresentacao: -1 * (i + 1) } 
+              });
+          }
 
           
           for (let i = 0; i < outrasTarefas.length; i++) {
@@ -137,16 +144,16 @@ class TarefasService {
               where: { id }
           });
       } catch (error) {
-        if(error instanceof Error){
-          throw new Error("Erro ao atualizar a ordem da tarefa: " + error.message);
-          
-        }
-         
+          if (error instanceof Error) {
+              throw new Error("Erro ao atualizar a ordem da tarefa: " + error.message);
+          }
       }
+  }
+
   }
 
 
 
-}
+
 
 export { TarefasService }
