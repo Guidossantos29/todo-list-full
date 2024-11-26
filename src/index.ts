@@ -190,7 +190,7 @@ app.delete("/tarefas/:id", async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /tarefas/reorder:
+ * /tarefas/reorder/{id}:
  *   put:
  *     summary: Atualiza a ordem de uma tarefa existente
  *     tags: [Tarefas]
@@ -236,7 +236,7 @@ app.delete("/tarefas/:id", async (req: Request, res: Response) => {
  *       500:
  *         description: Erro no servidor
  */
-app.put("/tarefas/reorder", async (req: Request, res: Response): Promise<any> => {
+app.put("/tarefas/reorder/:id", async (req: Request, res: Response): Promise<any> => {
   const { id, novaOrdem } = req.body;
 
   const tarefasService = new TarefasService();
